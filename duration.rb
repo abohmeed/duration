@@ -6,6 +6,7 @@ end
 # Constants
 rate = 65.0/60/60
 total = 0
+exchange = 17.6
 videos = Dir["#{ARGV[0]}/*.mp4"]
 for v in videos do
     durarion = `ffmpeg -i "#{v}" 2>&1`.scan(/Duration:\s*(\d\d):(\d\d):(\d\d)/).first
@@ -16,6 +17,8 @@ for v in videos do
 end
 fees = rate * total
 total = Time.at(total).utc.strftime("%H hours, %M minutes, and %S seconds")
+profit = fees.round * exchange
 
 puts "Total videos time is #{total}"
 puts "Ask for $#{fees.round}"
+puts "Equivalent to EGP #{profit.round}"
